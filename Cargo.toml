@@ -1,0 +1,13 @@
+[package]
+name = "rest_api_axum"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+tokio ={ version = "1.39.3", features = ["full"]}
+axum ={ version = "0.8.4", features = ["macros"]}
+askama ={ version = "0.14.0"}
+tower-http ={ version = "0.5.2", features = ["fs", "trace"]}
+tracing-subscriber = { version =  "0.3.18", features = ["env-filter"] }
+tracing = "0.1.40"
+serde = {version = "1.0.219", features = ["derive"]}

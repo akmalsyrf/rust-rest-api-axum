@@ -1,0 +1,33 @@
+{% extends "index.html" %}
+
+{% block title %}
+SignUP {%call super()%}
+{% endblock %}
+
+{% block meta %}
+<meta name="description" content="This is Sign up page">
+{% endblock %}
+
+<!-- css block -->
+{% block css %}
+<link rel="stylesheet" href="/static/css/auth.css">
+{% endblock %}
+
+{% block main %}
+<div class="auth-container">
+
+    <h1 class="auth-heading">Create Account</h1>
+    <form method="POST" action="/sign-up">
+
+        <input type="text" placeholder="Enter your email" name="email">
+
+        <input type="password" placeholder="Enter your password" name="password">
+
+        <button class="filled-button" type="submit">Submit</button>
+    </form>
+    <form method="GET" action="/log-in">
+        <button>Already have account? Log In</button>
+    </form>
+
+</div>
+{% endblock %}
