@@ -12,8 +12,9 @@ use crate::handlers::{
     public::home,
     todos::{create_todo_handler, todos_handler},
 };
+use crate::models::app::AppState;
 
-pub fn router() -> Router {
+pub fn router(app_state: AppState) -> Router {
     let server_dir = ServeDir::new("static");
 
     let app = Router::new()
@@ -23,6 +24,7 @@ pub fn router() -> Router {
         .route("/sign-up", get(sign_up_handler).post(post_sign_up_hander))
         .route("/log-in", get(log_in_handler))
         .nest_service("/static", server_dir)
+        .with_state(app_state)
         .layer(
             TraceLayer::new_for_http()
                 .make_span_with(|_: &Request<Body>| tracing::info_span!("http-request"))

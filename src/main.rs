@@ -1,4 +1,4 @@
-use rest_api_axum::{routes, init};
+use rest_api_axum::{routes, init, models::app::AppState};
 
 #[tokio::main]
 async fn main() {
@@ -7,14 +7,16 @@ async fn main() {
         .await
         .expect("Failed to bind addr");
 
-        init::logging();
+    init::logging();
 
-        tracing::info!("Server is starting...");
-    
-        tracing::info!("Listening at {}", addr);
-    
+    let mysql_pool = init::database_connection().await;
 
-    let app = routes::router();
+    let app_state = AppState {
+        connection_pool: mysql_pool
+    };
 
+    tracing::info!("Server is starting...");
+    tracing::info!("Listening at {}", addr);
+    let app = routes::router(app_state);
     axum::serve(listener, app).await.unwrap();
 }
